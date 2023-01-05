@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>历史订单</title>
+</head>
+<h3>历史订单</h3>
+<body>
+{% if count == 0 %}
+<h4>当前无历史订单！</h4>
+{% else %}
+{% for i in order_form %}
+    <p>
+        <h3>第{{ forloop.counter }}条订单<br>
+        订单状态:&emsp;{% if i.state == 1 %}订单已经接受;{% elif i.state == 2 %}订单被拒绝;{% endif %}<br>
+        商品数量:&emsp;{{ i.goods_number }}<br>
+        订单金额:&emsp;{{ i.money }}元</h3><br>
+        <input type="button" value="订单详情" onclick="window.location.href='/order_detail/{{ i.order_id }}/'"><br>
+    </p>
+{% endfor %}
+{% endif %}
+<input type="button" value="返回上一页" onclick="window.location.href='/order_show/'"></button>
+</body>
+</html>
+

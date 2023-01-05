@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>评论中心</title>
+    <style>
+        .divcss5 {
+            border: 1px solid #000;
+            width: 500px;
+            _height: 50px;
+            min-height: 50px;
+        }
+        textarea{
+            resize: none;
+        }
+        a{ text-decoration:none}
+        a{color: #000000
+        }
+        a:hover{color: #3174d0
+        }
+    </style>
+</head>
+<body>
+<br>
+<br>
+
+{% for i in form reversed %}
+    <div class="divcss5">
+    {% if post_id %}
+        <div style="color:#12d41c" >
+        <h3>第{{ i.post_id }}条&nbsp;&nbsp;{{ i.user_name }}</h3>
+        </div>
+        <div style="color: royalblue"><p>商品名称:&emsp;{{ goods_name }}</p></div>
+    {% endif %}
+        <h3>{{ i.post_context }}</h3><a href="/goods_post_detail/{{ i.post_id }}/" >查看回复</a>
+        <p>{{ i.post_time }}</p>
+    </div>
+    <br>
+{% endfor %}
+<br>
+<div>
+    <h3>发表评论</h3>
+<form method="post" name="create_post" action="/create_posts/{{ goods_id }}/">
+    {% csrf_token %}
+    <textarea  rows="8" cols="67" name="post_context"></textarea>
+    <br>
+    <input type="button" value="返回上一页" onclick="window.location.href='/goods_info/{{ goods_id }}/'"></button>
+    <button type="submit">评论</button>&nbsp;
+</form>
+</div>
+</br>
+</body>
+</html>

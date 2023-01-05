@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人中心</title>
+</head>
+<body>
+<h3>个人信息</h3>
+{% if is_login %}
+    <div>
+        <p>用户昵称：{{ user_name }}</p>
+        <p>账号：{{ user_account }}</p>
+        <p>密码：{{ user_password }}</p>
+        <p>电子邮箱：{{ user_email }}</p>
+        <p>联系方式：{{ user_phone }}</p>
+        <p>头像:</p><img src="/media/{{ user_avatar }}" height="150" width="150" ><br>
+        <form  action="{% url 'user_info' %}" method="post" name="form" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label>头像:</label><input type="file" name="avatar" accept="image/jpeg, image/jpg ,image/png">
+            <button type="submit">上传头像</button><br><br>
+        </form>
+        <input type="button" value="修改信息" onclick="window.location.href='/change/'"></button>
+        <input type="button" value="找回密码" onclick="window.location.href='/find_pwd/'"></button>
+        <input type="button" value="查看余额" onclick="window.location.href='/balance/'"></button>
+        <input type="button" value="购物车捏" onclick="window.location.href='/cart/{{ user_id_id }}/'"></button>
+        <input type="button" value="订单中心" onclick="window.location.href='/order_show/'"></button>
+        <input type="button" value="地址管理" onclick="window.location.href='/address_show/'"></button>
+        <input type="button" value="返回上一页" onclick="window.location.href='/index/'"></button>
+
+    </div>
+{% endif %}
+</body>
+</html>

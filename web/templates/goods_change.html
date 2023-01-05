@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>商品修改</title>
+    {% load static %}
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+</head>
+<h3>商品信息修改</h3>
+<body>
+<form action="/goods_change/{{ the_good.goods_id }}/" method="post" name="goods_change" enctype="multipart/form-data">
+    {% csrf_token %}
+    <p>
+        <label>商品名称:&emsp;</label>{{ the_good.goods_name }}&emsp;
+        <label>商品简介:&emsp;</label>{{ the_good.goods_introduction }}&emsp;
+        <label>商品库存:&emsp;</label>{{ the_good.stock }}&emsp;
+        <label>商品价格:&emsp;</label>{{ the_good.price }}元&emsp;<br>
+        <label>商品图片:&emsp;</label><img src="/media/{{ the_good.item_img }}" height="150" width="150">&emsp;
+        <input type="file" name="item_img">
+    </p>
+    <p>
+        <label>商品名称:&emsp;</label><input type="text" name="goods_name">
+    </p>
+    <p>
+        <label>商品库存:&emsp;</label><input type="text" name="stock">
+    </p>
+    <p>
+        <label>商品价格:&emsp;</label><input type="text" name="price">
+    </p>
+    <p>
+        <label>商品简介:&emsp;</label>
+        <textarea name=goods_introduction id="editor"></textarea>
+        <script type="text/javascript">
+
+            ck = CKEDITOR.replace('editor');
+            ck.setData('{{ the_good.goods_introduction }}')
+        </script>
+    </p>
+    <p>
+        <label>商品状态:&emsp;</label>
+        <select name="state">
+            <option value="0">未上架</option>
+            <option value="1">已上架</option>
+        </select>
+    </p>
+    <button type="submit">确认修改</button>
+    <input type="button" value="返回上一页" onclick="window.location.href='/seller_info/'">
+</form>
+
+</body>
+</html>

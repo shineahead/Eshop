@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>搜索商品</title>
+</head>
+<h2>商品查找</h2>
+<body>
+<form action="{% url 'search_goods' %}" method="post" name="search_goods">
+    {% csrf_token %}
+    <p>
+        <label>输入商品名称:&emsp;</label><input type="text" name="the_name">
+    </p>
+    <p>
+        <label>输入店铺名称:&emsp;</label><input type="text" name="the_store">
+    </p>
+    <button type="submit">搜索</button>
+    <input type="button" value="返回上一页" onclick="window.location.href='/index/'">
+    {% if number %}
+    <h1>共搜索到{{ number }}个结果</h1>
+    {% endif %}
+</form>
+    {% for i in perpage_data %}
+        <h3>
+            商品名称:{{ i.goods_name }}
+        </h3>
+        简介:{{ i.goods_introduction }}&emsp;
+        图片:<img src="/media/{{ i.item_img }}" height="150" width="150">&emsp;
+        库存:{{ i.stock }}&emsp;
+        状态:{% if i.state == 0 %}未上架{% else %}已上架{% endif %}&emsp;
+        售价:{{ i.price }}元&emsp;
+        <a href="/goods_info/{{ i.goods_id }}/">查看详情</a>&emsp;
+        <a href="/create_order/{{ i.goods_id }}/">立即购买</a>
+        <br><br>
+    {% endfor %}
+<div>页码:
+    {% if perpage_data.has_previous %}
+        <a href="/search_goods/?num={{ perpage_data.previous_page_number }}">上一页</a>
+    {% endif %}
+    {% for n in pager.page_range %}
+        <a href="/search_goods/?num={{ n }}">{{ n }}</a>&emsp;
+    {% endfor %}
+    {% if perpage_data.has_next %}
+        <a href="/search_goods/?num={{ perpage_data.next_page_number }}">下一页</a>
+    {% endif %}
+</div>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>找回密码</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/popper.js/1.12.5/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script>
+        function send_email(m) {
+            var reEml = /^[\w\-\.]+@[a-z0-9]+(\-[a-z0-9]+)?(\.[a-z0-9]+(\-[a-z0-9]+)?)*\.[a-z]{2,4}$/i;
+            {#alert(m.value);#}
+            var isok = reEml.test(m.value);
+            if (isok==false){
+                alert("请输入正确的邮箱！")
+                m.focus();
+            }
+            else{
+                re();
+            }
+        }
+    function re() {
+        $.ajax({
+            type: "post",
+            url: "/find_pwd/",
+            data: $('#find_pwd').serialize(),
+            success: function(msg){
+                alert(msg);
+            }
+        });
+    }
+</script>
+</head>
+<body>
+<form action="{% url 'find_pwd' %}" method="post" name="find_pwd" id="find_pwd">
+    {% csrf_token %}
+<p>
+    <label>请输入邮箱:</label>
+    <input type="text" name="email">
+    <button  type="submit" onclick="send_email(email)">获取验证码</button>
+</p>
+<p>
+    <label>验证码:&emsp;&emsp;</label>
+    <input type="text" name="email_code">
+    <button type="submit" >验证</button>
+</p>
+<p>
+    {% if is_login %}
+    <input type="button" value="返回上一页" onclick="window.location.href='/user_info/'">
+    {% elif seller_login%}
+    <input type="button" value="返回上一页" onclick="window.location.href='/seller_info/'">
+    {% endif %}
+</p>
+<div class="text-danger">
+    {{ error_message }}
+</div>
+<div class="text-danger">
+    {% if verify %}
+        密码:{{ user_password }}（别给别人说哦）
+    {% endif %}
+</div>
+</form>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>商家中心</title>
+</head>
+<body>
+<h3>商家中心</h3>
+<p>
+    <label>店铺名称:{{ store_name }}</label>
+</p>
+<p>
+    <label>店铺简介:{{ detail }}</label>
+</p>
+<p>
+    <label>商品数量:{{ goods_number }}</label>
+</p>
+<p>
+    <label>头像:</label><img src="/media/{{ avatar }}" height="150" width="150" >
+</p>
+<form  action="{% url 'seller_info' %}" method="post" name="form" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label>头像:</label><input type="file" name="avatar" accept="image/jpeg, image/jpg ,image/png">
+            <button type="submit">上传</button><br><br>
+</form>
+{% for i in perpage_data %}
+    <label>商品名称: {{ i.goods_name }}</label><br>
+    <label>商品简介: {{ i.goods_introduction }}</label><br>
+    <label>图片: </label><img src="/media/{{ i.item_img }}" height="150" width="150"><br>
+    <label>库存: {{ i.stock }}</label><br>
+    <label>单价: {{ i.price }}元</label><br>
+    <label>种类: {{ i.category_id.sort }}</label><br>
+    <label>状态: </label>{% if i.state == 0 %}未上架{% else %}已上架{% endif %}&emsp;&emsp;<br>
+    <a href="/goods_change/{{ i.goods_id }}">修改商品</a>&emsp;
+    <a href="/goods_delete/{{ i.goods_id }}">删除商品</a>&emsp;
+    <a href="/goods_info/{{ i.goods_id }}">商品详情</a><br><br>
+{% endfor %}
+<form action="{% url 'seller_info' %}" method="post" name="user_info">
+    {% csrf_token %}
+<p>
+    <input type="button" value="修改信息" onclick="window.location.href='/seller_change/'"></button>
+    <input type="button" value="订单管理" onclick="window.location.href='/order_manage/'"></button>
+    <input type="button" value="找回密码" onclick="window.location.href='/find_pwd/'"></button>
+    <input type="button" value="商品上新" onclick="window.location.href='/put_goods/'">
+    <input type="button" value="返回上一页" onclick="window.location.href='/index/'">
+</p>
+</form>
+<div>
+    {% if perpage_data.has_previous %}
+        <a href="/seller_info/?num={{ perpage_data.previous_page_number }}">上一页</a>
+    {% endif %}
+    {% for n in pager.page_range %}
+        <a href="/seller_info/?num={{ n }}">{{ n }}</a>&emsp;
+    {% endfor %}
+    {% if perpage_data.has_next %}
+        <a href="/seller_info/?num={{ perpage_data.next_page_number }}">下一页</a>
+    {% endif %}
+</div>
+</body>
+</html>

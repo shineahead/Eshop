@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>评论详情</title>
+    <style>
+        .divcss5 {
+            border: 1px solid #000;
+            width: 500px;
+            _height: 50px;
+            min-height: 50px;
+        }
+    </style>
+</head>
+<body>
+<h1>评论页</h1>
+<div class="divcss5">
+    <h3>{{ form.post_id }}&nbsp;&nbsp;{{ form.user_name }}</h3>
+    <p>{{ form.post_context }}</p>
+    <p>{{ form.post_time }}</p>
+</div>
+<br>
+
+{% for i in reply_form %}
+    <div class="divcss5">
+        <h3>第{{ forloop.counter }}条&nbsp;&nbsp;{{ i.seller_name }}</h3>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ i.reply_context }}</p>
+        <p>{{ i.reply_time }}</p>
+    </div>
+{% endfor %}
+</form>
+<br>
+<input type="button" value="返回上一页" onclick="window.location.href='/goods_post/{{ goods_id }}/'"></button>
+<input type="button" value="返回首页" onclick="window.location.href='/index/'"></button>
+{% if seller_login %}
+<div>
+    <h3>发表回复</h3>
+<form method="post" name="post_reply" action="/reply_post/{{ form.post_id }}/">
+    {% csrf_token %}
+
+    <textarea  rows="8" cols="67" name="reply_context"></textarea>
+    <br>
+    <button type="submit">回复</button>
+
+</form>
+</div>
+{% else %}
+    <h2>仅有商家可以进行回复</h2>
+{% endif %}
+</br>
+</body>
+</html>

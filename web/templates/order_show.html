@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>订单中心</title>
+</head>
+<h2>订单中心</h2>
+<body>
+{% for i in order_form %}
+    <p>
+        <h3>第{{ forloop.counter }}条订单<br>
+        订单状态:&emsp;{% if i.state == 0 %}下单未处理;{% elif i.state == 1 %}订单已经接受;{% else %}订单被拒绝;{% endif %}<br>
+        商品数量:&emsp;{{ i.goods_number }}<br>
+        订单金额:&emsp;{{ i.money }}元</h3><br>
+        <input type="button" value="订单详情" onclick="window.location.href='/order_detail/{{ i.order_id }}/'"><br>
+    </p>
+{% endfor %}
+<input type="button" value="历史订单" onclick="window.location.href='/order_pre/'"></button>
+<input type="button" value="返回上一页" onclick="window.location.href='/user_info/'"></button>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>操作订单</title>
+</head>
+<h3>操作订单</h3>
+<body>
+<p>
+    创建时间:&emsp;{{ the_order.create_time }}<br>
+    商品名称:&emsp;{{ the_order.goods.goods_name }}<br>
+    商品数量:&emsp;{{ the_order.order_goods_number }}<br>
+    商品图片:&emsp;<img src="/media/{{ the_order.order_goods.item_img }}" height="150" width="150"><br>
+    订单金额:&emsp;{{ the_order.money }}元<br>
+    收件人:&emsp;&emsp;{{ the_order.address.receiver }}<br>
+    收货地址:&emsp;{{ the_order.address.address }}<br>
+    邮编号码:&emsp;{{ the_order.address.post }}<br>
+    联系方式:&emsp;{{ the_order.address.phone_number }}&emsp;
+</p>
+<form action="/order_operate/{{ order_id }}/" method="post" name="order_operate">
+    {% csrf_token %}
+    <label>操作订单:&emsp;</label><input type="radio" name="state" checked="checked" value="1">接受订单
+    <input type="radio" name="state" value="2">拒绝订单<br>
+    <button type="submit">确认订单</button>
+    <input type="button" value="返回上一页" onclick="window.location.href='/order_manage/'"></button>
+</form>
+</body>
+</html>

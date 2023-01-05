@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>订单管理</title>
+</head>
+<h3>订单管理</h3>
+<input type="button" value="返回上一页" onclick="window.location.href='/seller_info/'"></button>
+<body>
+{% for i in order_form %}
+    <p>
+        <h3>第{{ forloop.counter }}条订单<br>
+        创建时间:&emsp;{{ i.create_time }}<br>
+        订单金额:&emsp;{{ i.money }}元<br>
+        订单状态:&emsp;{% if i.state == 0 %}下单未处理;{% elif i.state == 1 %}订单已经接受;{% else %}订单被拒绝;{% endif %}<br>
+        商品名称:&emsp;{{ i.order_goods.goods_name }}<br>
+        商品图片:&emsp;<img src="/media/{{ i.order_goods.item_img }}" height="150" width="150"><br>
+        收件人:&emsp;&emsp;{{ i.address.receiver }}<br>
+        收货地址:&emsp;{{ i.address.address }}<br>
+        联系方式:&emsp;{{ i.address.phone_number }}<br>
+        邮编号码:&emsp;{{ i.address.post }}</h3><br>
+        {% if i.state == 0 %}
+        <a href="/order_operate/{{ i.order_id }}/">操作订单</a>
+        {% endif %}
+    </p>
+{% endfor %}
+</body>
+</html>

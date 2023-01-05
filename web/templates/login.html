@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/popper.js/1.12.5/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <meta charset="UTF-8">
+    <title>登录</title>
+</head>
+<body>
+<h1>
+    导航栏
+</h1>
+<h2>
+    <a href="/index/">主页</a>|<a href="/register1/">用户注册</a>|<a href="/register2/">商家注册</a>
+</h2>
+<form action = "{% url 'login' %}"  method = 'post' name="login">
+    {% csrf_token %}
+    <p>
+        <label for = 'ua'>账号：</label> <input type="text" name="account" id="ua" >
+        <div class="text-danger">
+                {% if user_verify %}
+                {{ obj.errors.username.0 }}
+                {% endif %}
+        </div>
+    </p>
+    <p>
+        <label for = 'al'>密码：</label> <input type="text" name="password" id="al" >
+        <div class="text-danger">
+                {% if user_verify %}
+                {{ obj.errors.password.0 }}
+                {% endif %}
+        </div>
+    </p>
+    <p>
+        验证码：{{ obj.captcha }}
+    </p>
+    <p>
+        &emsp;&emsp;&emsp;<button type='submit'>买家登录</button>
+    </p>
+</form>
+<div class="text-danger">
+    {% if user_verify %}
+    {{ error_message }}
+    {% endif %}
+</div>
+
+<form action = "{% url 'login1' %}"  method = 'post' name="login1">
+    {% csrf_token %}
+    <p>
+        <label for = 'ua'>账号：</label> <input type="text" name="account" id="ua" >
+        <div class="text-danger">
+                {% if seller_verify %}
+                {{ obj.errors.username.0 }}
+                {% endif %}
+        </div>
+    </p>
+    <p>
+        <label for = 'al'>密码：</label> <input type="text" name="password" id="al" >
+        <div class="text-danger">
+                {% if seller_verify %}
+                {{ obj.errors.password.0 }}
+                {% endif %}
+        </div>
+    </p>
+    <p>
+        验证码：{{ obj.captcha }}
+    </p>d
+    <p>
+        &emsp;&emsp;&emsp;<button type='submit'>商家登录</button>
+    </p>
+</form>
+<div class="text-danger">
+    {% if seller_verify %}
+    {{ error_message }}
+    {% endif %}
+</div>
+</body>
+</html>

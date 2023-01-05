@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>商家信息修改</title>
+</head>
+<body>
+<p>
+    店铺名称:{{ the_seller.store_name }}&emsp;
+</p>
+<p>
+    店铺简介:{{ the_seller.detail }}&emsp;
+</p>
+    <h3>修改信息</h3>
+    <form action="{% url 'seller_change' %}" method="post" name="seller_change">
+        {% csrf_token %}
+        <p>
+            <label>
+                店铺名称:&nbsp;
+                <input type="text" name="store_name">
+            </label>
+        </p>
+        <p>
+            <label>
+                店铺简介:&nbsp;
+                <input type="text" name="detail">
+            </label>
+        </p>
+        <p>
+            <label>
+                账号:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="text" name="account">
+            </label>
+        </p>
+        <p>
+            <label>
+                邮箱:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="text" name="email">
+            </label>
+        </p>
+        <p>
+            <label>
+                密码:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="text" name="password">
+            </label>
+        </p>
+        <button type="submit">确认修改</button>
+        <input type="button" value="返回上一页" onclick="window.location.href='/seller_info/'">
+    </form>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>导航</title>
+</head>
+<body>
+<form action="{% url 'index' %}" method="post" name="index">
+    {% csrf_token %}
+    <input type="button" value="商品搜索" onclick="window.location.href='/search_goods/' ">
+    <input type="button" value="用户注册" onclick="window.location.href='/register1/'"><-->
+    <input type="button" value="商家注册" onclick="window.location.href='/register2/'"><-->
+{% if not is_login or not seller_login %}
+    <input type="button" value="登录" onclick="window.location.href='/login/'"><br><br>
+{% endif %}
+</form>
+<br>
+{% if is_login %}
+    <input type="button" value="个人中心" onclick="window.location.href='/user_info/' ">
+    <input type="button" value="登出" onclick="window.location.href='/logout/' ">
+    <h1>欢迎@{{ user_name }}用户</h1>
+{% endif %}
+<br>
+{% if seller_login %}
+    <input type="button" value="商家中心" onclick="window.location.href='/seller_info/' ">
+    <input type="button" value="登出" onclick="window.location.href='/logout/' ">
+    <h1>欢迎@{{ store_name }}商家</h1>
+{% endif %}
+    {% for tp in tps %}
+        <p>
+        {{ tp.type_id }}.<a href="/category/{{ tp.type_id }}/">{{ tp.sort }}</a>
+        </p>
+    {% endfor %}
+{% if is_login %}
+<p>
+    <h2>猜你喜欢:</h2><br>
+    <label>商品名称:&emsp;</label>{{ good1.goods_name }}<br>
+    <label>商品简介:&emsp;</label>{{ good1.goods_introduction }}<br>
+    <label>商品价格:&emsp;</label>{{ good1.price }}元<br>
+    <label>商品图片:&emsp;</label><img src="/media/{{ good1.item_img }}" height="150" width="150"><br>
+    <label>商品库存:&emsp;</label>{{ good1.stock }}<br>
+    <label>商品状态:&emsp;</label>{% if good1.state == 0 %}未上架{% else %}已上架{% endif %}<br>
+    <a href="/goods_info/{{ good1.goods_id }}/">查看详情</a><br><br>
+    <label>商品名称:&emsp;</label>{{ good2.goods_name }}<br>
+    <label>商品简介:&emsp;</label>{{ good2.goods_introduction }}<br>
+    <label>商品价格:&emsp;</label>{{ good2.price }}元<br>
+    <label>商品图片:&emsp;</label><img src="/media/{{ good2.item_img }}" height="150" width="150"><br>
+    <label>商品库存:&emsp;</label>{{ good2.stock }}<br>
+    <label>商品状态:&emsp;</label>{% if good2.state == 0 %}未上架{% else %}已上架{% endif %}<br>
+    <a href="/goods_info/{{ good2.goods_id }}/">查看详情</a><br>
+</p>
+{% endif %}
+</body>
+</html>
+
+

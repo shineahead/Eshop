@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>加入购物车</title>
+</head>
+<h3>确认加入购物车</h3>
+<body>
+<form action="/add_cart/{{ the_good.goods_id }}/" method="post" name="add_cart">
+    {% csrf_token %}
+    <p>
+        <label>商品名称:&emsp;{{ the_good.goods_name }}</label>
+    </p>
+    <p>
+        <label>商品价格:&emsp;{{ the_good.price }}</label>
+    </p>
+    <p>
+        <label>店铺名称:&emsp;{{ store_name }}</label>
+    </p>
+    <p>
+        <label>输入数量:&emsp;</label><input type="text" name="goods_number">
+    </p>
+    <button type="submit">确认加入</button>
+    <input type="button" value="返回上一页" onclick="window.location.href='/goods_info/{{ the_good.goods_id }}/'">
+</form>
+</body>
+</html>

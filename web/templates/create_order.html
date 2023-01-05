@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>确认订单</title>
+</head>
+<h3>订单详情</h3>
+<body>
+<form action="/create_order/{{ the_good.goods_id  }}/{{ cart }}/" method="post" name="create_order" >
+    {% csrf_token %}
+    <p>
+        <label>商品名称:&emsp;{{ the_good.goods_name }}</label>
+    </p>
+    <p>
+        <label>商品价格:&emsp;{{ the_good.price }}</label>
+    </p>
+    <p>
+        <label>商品数量:&emsp;</label><input type="text" name="goods_number" value="{{ goods_number }}">
+    </p>
+    <p>
+        <label>商品图片:&emsp;</label><img src="/media/{{ the_good.item_img }}" height="150" width="150">
+    </p>
+    <p>
+        <label>地址选择:&emsp;</label>
+        <select name="the_address">
+            {% for i in address %}
+            <option value="{{ i.address_id }}">收件人:{{ i.receiver }}&emsp;地址:{{ i.address }}&emsp;联系方式:{{ i.phone_number }}&emsp;邮编:
+                {{ i.post }}{% if i.is_default %}(默认地址){% endif %}</option>
+            {% endfor %}
+        </select>
+    </p>
+    <button type="submit">提交订单</button>
+    <input type="button" value="取消订单" onclick="window.location.href='/index/'">
+</form>
+</body>
+</html>

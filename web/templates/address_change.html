@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改地址</title>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/css/bootstrap.min.css">
+</head>
+<h3>修改地址</h3><br>
+<body>
+<p>
+    收件人:{{ adress.receiver }}&emsp;
+    地址:{{ adress.address }}&emsp;
+    邮编:{{ adress.post }}&emsp;
+    电话:{{ adress.phone_number }}&emsp;
+    是否默认:{% if adress.is_default %}默认{% else %}非默认{% endif %}&emsp;
+</p>
+<br>
+<form action="/address_change/{{ adress.address_id }}/" method="post" name="address_change">
+    {% csrf_token %}
+    <label>收件人:&emsp;</label><input type="text" name="receiver1"><br>
+
+    <label>地址:&emsp;&emsp;</label><input type="text" name="address1"><br>
+
+    <label>邮编:&emsp;&emsp;</label><input type="text" name="post1"><br>
+
+    <label>电话:&emsp;&emsp;</label><input type="text" name="phone_number1"><br>
+
+    <label>是否默认:</label><select name="is_default1">
+    <option value="1">是</option>
+    <option value="0">否</option>
+</select>
+    <button type="submit">确认修改</button>
+    <input type="button" value="返回上一页" onclick="window.location.href='/address_show/'"></button>
+</form>
+</body>
+</html>
+

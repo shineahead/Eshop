@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>导航</title>
+</head>
+<body>
+<form action="{% url 'get' %}" method="post" name="get">
+    {% csrf_token %}
+    <input type="button" value="用户注册" onclick="window.location.href='/register1/'">
+    <input type="button" value="商家注册" onclick="window.location.href='/register2/'">
+    <input type="button" value="主页" onclick="window.location.href='/index/'">
+</form>
+</body>
+</html>

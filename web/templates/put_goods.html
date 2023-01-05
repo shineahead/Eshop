@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>上新</title>
+    {% load static %}
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+</head>
+<h3>商品上新</h3>
+<body>
+<form action="/put_goods/" method="post" name="put_goods" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% if good %}
+        <input type="hidden" name="goods_id" value={{ good.id }}>
+    {% else %}
+        <input type="hidden" name="goods_id" value=0 >
+    {% endif %}
+    <p>
+        <label></label>商品名称:&emsp;<input type="text" name="goods_name">
+        <div class="text-danger">{{ form.errors.goods_name.0 }}</div>
+    </p>
+    <p>
+        <label>商品简介:&emsp;</label>
+        <textarea name=item_introduction id="editor"></textarea>
+        <script type="text/javascript">
+
+            ck = CKEDITOR.replace('editor');
+            ck.setData('{{ the_good.goods_introduction }}')
+        </script>
+        <div class="text-danger">{{ form.errors.goods_introduction.0 }}</div>
+    </p>
+    <p>
+        <label></label>商品价格:&emsp;<input type="text" name="price">
+        <div class="text-danger">{{ form.errors.price.0 }}</div>
+    </p>
+    <p>
+        <label></label>商品库存:&emsp;<input type="text" name="stock">
+        <div class="text-danger">{{ form.errors.stock.0 }}</div>
+    </p>
+    <p>
+        <label></label>商品图片:&emsp;<input type="file" name="item_img" accept="image/jpeg, image/jpg ,image/png">
+    </p>
+    <p>
+    <label>商品种类:&emsp;</label><select name="category">
+        <option value="1">服饰</option>
+        <option value="2">百货</option>
+        <option value="3">箱包</option>
+        <option value="4">母婴</option>
+        <option value="5">美妆</option>
+        <option value="6">居家</option>
+        <option value="7">数码</option>
+        <option value="8">电器</option>
+    </select>
+    </p>
+    <p>
+    <label>商品状态:&emsp;</label><select name="state">
+        <option value="0">未上架</option>
+        <option value="1">已上架</option>
+    </select>
+    </p>
+    <button type="submit">确认上新</button>
+    <input type="button" value="返回上一页" onclick="window.location.href='/seller_info/'">
+</form>
+</body>
+</html>

@@ -1,0 +1,45 @@
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改信息</title>
+</head>
+<body>
+    <h3>修改信息</h3>
+    <form  name="change" action="{% url 'change' %}" method="post">
+        {% csrf_token %}
+    <label>
+        用户昵称:&nbsp;&nbsp;&nbsp;
+        <input type="text" name="user_name">{{ obj.errors.user_name.0 }}
+    </label>
+    <br>
+    <label>
+        账&emsp;&emsp;号:&nbsp;&nbsp;&nbsp;
+        <input type="text" name="account">{{ obj.errors.user_account.0 }}
+    </label>
+    <br>
+    <label>
+        联系方式:&nbsp;&nbsp;&nbsp;
+        <input type="text" name="phone">{{ obj.errors.user_account.0 }}
+    </label>
+    <br>
+    <label>
+         密&emsp;&emsp;码:&nbsp;&nbsp;&nbsp;
+        <input type="text" name="password">{{ obj.errors.user_password.0 }}
+    </label>
+    <br>
+        <label>
+         确认密码:&nbsp;&nbsp;&nbsp;
+        <input type="text" name="password2">{{ obj.errors.user_password2.0 }}
+        </label>
+    <br>
+    <label>
+        邮&emsp;&emsp;箱:&nbsp;&nbsp;&nbsp;
+        <input type="text" name="email">{{ obj.errors.user_email.0 }}
+    </label>
+    <br>
+    <button type="submit">确认修改</button>
+        <input type="button" value="返回上一页" onclick="window.location.href='/user_info/'">
+    </form>
+</body>
+</html>

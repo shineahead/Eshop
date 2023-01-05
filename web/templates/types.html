@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ type.sort }}</title>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/css/bootstrap.min.css">
+</head>
+<body>
+<h3>{{ type.sort }}</h3><br>
+<form action="/category/{{ type.type_id }}" method="post" name="type">
+    {% csrf_token %}
+    {% if error_message %}
+        <div class="text-danger">
+            {{ error_message }}
+        </div>
+    <br>
+    {% else %}
+    {% for good in perpage_data %}
+        <h3>
+            商品名称:&emsp;{{ good.goods_name }}<br>
+        </h3>
+        简介:&emsp;{{ good.goods_introduction }}<br>
+        图片:&emsp;<img src="/media/{{ good.item_img }}" height="150" width="150"><br>
+        库存:&emsp;{{ good.stock }}<br>
+        状态:&emsp;{% if good.state == 0 %}未上架{% else %}已上架{% endif %}<br>
+        售价:&emsp;{{ good.price }}元<br>
+        <a href="/goods_info/{{ good.goods_id }}/">查看详情</a>&emsp;
+        <a href="/create_order2/{{ good.goods_id }}/">立即购买</a>
+        <br><br>
+    {% endfor %}{% endif %}
+    <br>
+</form>
+<p>
+    <input type="button" value="返回上一页" onclick="window.location.href='/index/'">
+</p>
+<div>页码:
+    {% if perpage_data.has_previous %}
+        <a href="/category/{{ type_id }}/?num={{ perpage_data.previous_page_number }}">上一页</a>
+    {% endif %}
+    {% for n in pager.page_range %}
+        <a href="/category/{{ type_id }}/?num={{ n }}">{{ n }}</a>&emsp;
+    {% endfor %}
+    {% if perpage_data.has_next %}
+        <a href="/category/{{ type_id }}/?num={{ perpage_data.next_page_number }}">下一页</a>
+    {% endif %}
+</div>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/popper.js/1.12.5/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <meta charset="UTF-8">
+    <title>余额</title>
+</head>
+<body>
+<form action="{% url 'balance' %}" method="post" name="balance">
+    {% csrf_token %}
+    <label>余额:{{ user_balance }}</label>
+    <input type="text" name="balance_add">
+    <button type="submit">充值</button>
+    <input type="button" value="返回上一页" onclick="window.location.href='/user_info/'">
+</form>
+<div class="text-danger">{{ error_message }}</div>
+</body>
+</html>

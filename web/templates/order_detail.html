@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>订单详情</title>
+</head>
+<h3>订单详情</h3>
+<body>
+<p>
+    创建时间:&emsp;{{ the_order.create_time }}<br>
+    订单状态:&emsp;{% if the_order.state == 0 %}下单未处理;{% elif the_order.state == 1 %}订单已经接受;{% else %}订单被拒绝;{% endif %}<br>
+    店铺名称:&emsp;{{ the_store.store_name }}<br>
+    商品名称:&emsp;{{ the_good.goods_name }}<br>
+    商品数量:&emsp;{{ the_order.goods_number }}<br>
+    商品简介:&emsp;{{ the_good.goods_introduction }}<br>
+    商品图片:&emsp;<img src="/media/{{ the_good.item_img }}" height="150" width="150"><br>
+    订单金额:&emsp;{{ the_order.money }}元<br>
+    收件人:&emsp;&emsp;{{ the_order.address.receiver }}<br>
+    收货地址:&emsp;{{ the_order.address.address }}<br>
+    邮编号码:&emsp;{{ the_order.address.post }}<br>
+    联系方式:&emsp;{{ the_order.address.phone_number }}&emsp;
+</p>
+<input type="button" value="返回上一页" onclick="window.location.href='/order_show/'"></button>
+</body>
+</html>

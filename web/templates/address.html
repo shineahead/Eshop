@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>地址管理</title>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/css/bootstrap.min.css">
+</head>
+<h3>地址管理</h3><br>
+{% if error_message %}
+<div class="text-danger">
+    {{ error_message }}
+</div>
+{% else %}
+{% for adres in adress %}
+<p>
+    收件人:{{ adres.receiver }}&emsp;
+    地址:{{ adres.address }}&emsp;
+    邮编:{{ adres.post }}&emsp;
+    电话:{{ adres.phone_number }}&emsp;
+    是否默认:{% if adres.is_default %}默认{% else %}非默认{% endif %}&emsp;<a href="/address_change/{{ adres.address_id }}/">修改地址</a>&emsp;
+    <a href="/address_delete/{{ adres.address_id }}/">删除地址</a>
+</p>
+{% endfor %}
+{% endif %}<br>
+<body>
+<form action="{% url 'address_show' %}" method="post" name="address_show">
+    {% csrf_token %}
+    <label>收件人:&emsp;</label><input type="text" name="receiver1">
+    <div class="text-danger">{{ ad.errors.receiver1.0 }}</div><br>
+
+    <label>地址:&emsp;&emsp;</label><input type="text" name="address1">
+    <div class="text-danger">{{ ad.errors.address1.0 }}</div><br>
+
+    <label>邮编:&emsp;&emsp;</label><input type="text" name="post1">
+    <div class="text-danger">{{ ad.errors.post1.0 }}</div><br>
+
+    <label>电话:&emsp;&emsp;</label><input type="text" name="phone_number1">
+    <div class="text-danger">{{ ad.errors.phone_number1.0 }}</div><br>
+
+    <label>是否默认:</label><select name="is_default1">
+    <option value="1">是</option>
+    <option value="0">否</option>
+</select>
+    <button type="submit">增加地址</button>
+    <input type="button" value="返回上一页" onclick="window.location.href='/user_info/'"></button>
+</form>
+</body>
+</html>

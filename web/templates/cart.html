@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>购物车</title>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/css/bootstrap.min.css">
+</head>
+<h2>购物车</h2>
+<body>
+{% if error_message %}
+    <div class="text-danger">
+            {{ error_message }}
+    </div>
+{% else %}
+{% for i in perpage_data %}
+    <p>
+        商品名称:&emsp;{{ i.goods_name }}<br>
+        店铺名称:&emsp;{{ i.seller_name }}&emsp;<br>
+        商品图片:&emsp;<img src="/media/{{ i.img }}" height="150" width="150"><br>
+        商品数量:&emsp;{{ i.goods_number }}<br>
+        商品单价:&emsp;{{ i.price }}元<br>
+        商品状态:&emsp;{% if i.status %}已下单{% else %}未下单{% endif %}<br>
+        {% if i.status == 0 %}
+        <input type="button" value="购买" onclick="window.location.href='/create_order/{{ i.goods_id }}/{{ i.cart }}/' ">
+        {% endif %}
+        <input type="button" value="删除" onclick="window.location.href='/delete_cart/{{ i.cart }}/' ">
+    </p>
+{% endfor %}
+{% endif %}
+<input type="button" value="返回上一页" onclick="window.location.href='/user_info/'"></button>
+<div>页码:
+    {% if perpage_data.has_previous %}
+        <a href="/cart/user_id_id/?num={{ perpage_data.previous_page_number }}">上一页</a>
+    {% endif %}
+    {% for n in pager.page_range %}
+        <a href="/cart/user_id_id/?num={{ n }}">{{ n }}</a>&emsp;
+    {% endfor %}
+    {% if perpage_data.has_next %}
+        <a href="/cart/user_id_id/?num={{ perpage_data.next_page_number }}">下一页</a>
+    {% endif %}
+</div>
+</body>
+</html>
+

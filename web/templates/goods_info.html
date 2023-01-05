@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>商品详情</title>
+    {% load static %}
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+</head>
+<h1>商品大促销！！！！</h1>
+<h3>商品详情</h3>
+<body>
+<form action="/create_order/{{ the_good.goods_id }}/" method="post" name="create_order">
+    {% csrf_token %}
+    <p>
+        <label>商品名称:&emsp;</label>{{ the_good.goods_name }}
+    </p>
+    <p>
+        <label>商品简介:&emsp;</label>{{ the_good.goods_introduction }}
+    </p>
+    <p>
+        <label>商品图片:&emsp;</label><img src="/media/{{ the_good.item_img }}" height="150" width="150">
+    </p>
+    <p>
+        <label>商品库存:&emsp;</label>{{ the_good.stock }}
+    </p>
+    <p>
+        <label>商品价格:&emsp;</label>{{ the_good.price }}元
+    </p>
+    <p>
+        <label>商品分类:&emsp;</label>{{ category }}
+    </p>
+    <input type="button" value="查看评论" onclick="window.location.href='/goods_post/{{ the_good.goods_id }}/'"></button>
+    {% if is_login %}
+    <input type="button" value="加入购物车" onclick="window.location.href='/add_cart/{{ the_good.goods_id }}/'"></button>
+    <input type="button" value="立即购买" onclick="window.location.href='/create_order2/{{ the_good.goods_id }}/'"></button>
+    {% endif %}
+    {% if seller_login %}
+    <input type="button" value="返回上一页" onclick="window.location.href='/seller_info/'">
+    {% elif type_id %}
+    <input type="button" value="返回上一页" onclick="window.location.href='/category/{{ type_id }}/'">{% endif %}
+    <input type="button" value="返回首页" onclick="window.location.href='/index/'">
+</form>
+</body>
+</html>
